@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Form</title>
+
+<style>
+
+	@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,700&display=swap');
+
+
+	body{
+		font-family: 'Montserrat', sans-serif;
+	}
+	float-container {
+    border: 2px solid #e1e1e1;
+    padding: 20px;
+    float: left;
+}
+
+
+.form {
+    width: 25%;
+    float: left;
+    padding: 20px;
+    border: 2px solid #b3afaf;
+    margin: 20px;
+}
+
+.table {
+    width: 40%;
+    float: left;
+    padding: 20px;
+    border: 2px solid #b3afaf;
+    margin: 20px;
+}  
+
+
+#savebtn {
+    background-color: #04AA6D;
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    padding: 6px 25px;
+    margin: 4px;
+    border-radius: 8px;
+    word-spacing: 10px;
+}
+
+#clearbtn {
+    background-color: #1061a1;
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    padding: 6px 25px;
+    margin-top: 4px;
+    border-radius: 8px;
+    word-spacing: 10px;
+}
+
+#clearallbtn {
+    background-color: #181818;
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    padding: 6px 25px;
+    margin-top: 4px;
+    border-radius: 8px;
+    word-spacing: 10px;
+}
+
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+
+	.rowColumn {
+		float:left; width: 33%;
+	}
+	.clearBtn{
+		color:  red;
+		cursor:  pointer;
+	}
+	.rowContainer {
+		margin-top: 8px; background-color: #ffffff; border: 1px solid #000000; clear:both; padding: 5px; overflow: hidden;
+width: 99%;
+	}
+
+
+
+
+</style>
+</head>
+<body>
+
+	<div class="float-container">
+
+		<div class="form">
+
+<div id="myForm">
+  <label for="fname">Full name</label><br>
+  <input type="text" id="fname" name="fname"><br><br>
+  <label for="age">Age</label><br>
+  <input type="text" id="age" name="age"><br><br>
+  <button id="savebtn" onclick="submitRecord()">save</button>
+  <button id="clearbtn" onclick="clearForm()">Clear</button>
+</div>
+</div>
+
+<div class="table">
+
+  <div style="marginTop:5px; background-color: #F5F5F5; clear:  both; padding: 10px";}>
+  	<h2>Users</h2>
+  	<div style="background-color: #181818; clear:both; padding: 5px; overflow: hidden;
+width: 99%;">
+  		<div style="float:left; width: 33%; color: white">Full name</div>
+  		<div style="float: left; width: 33%; color: white">Age</div>
+  		<div style="float: left; width: 33%; color: white">Action</div>
+
+  	</div>
+
+<div style="clear: both"></div>
+<div id="rows">
+  
+</div>
+  	
+  	<button id="clearallbtn"style="width 100%; bottom: 0; margin: 20px auto;" onclick="clearAllRecords()"> Clear All</button>
+
+  </div>
+
+  </div>
+
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script>
+  	var formArr = [];
+	function submitRecord() {
+		var name = document.getElementById("fname").value;
+		var age = document.getElementById("age").value;
+		
+		var rowObj = {};
+		rowObj.name = name;
+		rowObj.age = age;
+
+		formArr.push(rowObj);
+
+		console.log(formArr);
+
+		let rowInd = formArr.length-1;
+		$("#rows").append('<div class="rowContainer"><div class="rowColumn">'+name+'</div><div class="rowColumn">'+age+'</div><div class="rowColumn clearBtn clearRow" onclick="clearRecord('+rowInd+')">Clear</div></div>')
+	}
+
+	function clearForm(){
+		document.getElementById("fname").value = "";
+		document.getElementById("age").value = "";
+
+	}
+	function clearRecord(index) {
+		
+		 //alert("clear record"+index);
+
+		 formArr.splice(index, 1);
+
+		$("#rows").empty();
+		for(i=0;  i<formArr.length; i++){
+			$("#rows").append('<div class="rowContainer"><div class="rowColumn">'+formArr[i].name+'</div><div class="rowColumn">'+formArr[i].age+'</div><div class="rowColumn clearBtn clearRow" onclick="clearRecord('+formArr[i].rowInd+')">Clear</div></div>')
+		}
+	}
+
+	function clearAllRecords() {
+		formArr = [];
+		$("#rows").empty();
+
+	}
+</script>
+
+</body>
+</html>
